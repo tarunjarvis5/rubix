@@ -10,7 +10,7 @@ def detect_color(img,hsv):
     lower_white = np.array([0, 0, 100],np.uint8)
     upper_white = np.array([0, 0, 255],np.uint8)
 
-    lower_red = np.array([0, 100, 50], np.uint8)
+    lower_red = np.array([0, 100, 100], np.uint8)
     upper_red = np.array([5, 255, 255],np.uint8)
 
     lower_orange = np.array([10, 100, 100], np.uint8)
@@ -32,7 +32,7 @@ def detect_color(img,hsv):
         if area > 5000 :
             f = cv2.drawContours(img, contour, -1, (0, 255, 0), 2)
             (x, y, w, h) = cv2.boundingRect(contour)
-            rec = cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
+            cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
             center = (x, y)
             x1 = w / 2
             y1 = h / 2
@@ -47,9 +47,8 @@ def detect_color(img,hsv):
             if len(lst) != 9 :
                 if cx not in lst :
                     if cy not in lst :
-                        lst.append(["Blue",cx,cy,cx+cy])
+                        lst.append(["Blue",cx,cy])
 
-            
             #print(pyautogui.position())
             #print(lst)
             #print(type (rec))
@@ -65,7 +64,20 @@ def detect_color(img,hsv):
             cv2.drawContours(img, contour, -1, (0, 255, 0), 2)
             (x, y, w, h) = cv2.boundingRect(contour)
             cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
-
+            x1 = w / 2
+            y1 = h / 2
+            cx = x + x1
+            cy = y + y1
+            circ = cv2.circle(img, (int(cx), int(cy)), 2, (0, 0, 255), -1)
+            text = str(cx)
+            text += ","
+            text += str(cy)
+            cv2.putText(img, text, (int(cx), int(cy)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
+            cv2.putText(img, "RED", (int(cx), int(y) + h - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 29, 206), 2)
+            if len(lst) != 9:
+                if cx not in lst:
+                    if cy not in lst:
+                        lst.append(["Red", cx, cy])
 
     contours_orange = cv2.findContours(maskorange, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     contours_orange = imutils.grab_contours(contours_orange)
@@ -80,10 +92,17 @@ def detect_color(img,hsv):
             cx = x + x1
             cy = y + y1
             circ = cv2.circle(img, (int(cx), int(cy)), 2, (0, 0, 255), -1)
+            text = str(cx)
+            text += ","
+            text += str(cy)
+            cv2.putText(img, text, (int(cx), int(cy)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
+            cv2.putText(img, "ORANGE", (int(cx), int(y)+h-5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 29, 206), 2)
             if len(lst) != 9:
                 if cx not in lst:
                     if cy not in lst:
-                        lst.append(["orange", cx, cy])
+                        lst.append(["Orange", cx, cy])
+
+    lst.sort(key = lambda x: x[1])
     print(lst)
 
     contours_white = cv2.findContours(maskwhite, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -94,7 +113,15 @@ def detect_color(img,hsv):
             cv2.drawContours(img, contour, -1, (0, 255, 0), 2)
             (x, y, w, h) = cv2.boundingRect(contour)
             cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
-
+            x1 = w / 2
+            y1 = h / 2
+            cx = x + x1
+            cy = y + y1
+            circ = cv2.circle(img, (int(cx), int(cy)), 2, (0, 0, 255), -1)
+            if len(lst) != 9:
+                if cx not in lst:
+                    if cy not in lst:
+                        lst.append(["White", cx, cy])
 
     #cv2.imshow("maskblue", maskblue)
     #cv2.imshow("maskred", maskred)
