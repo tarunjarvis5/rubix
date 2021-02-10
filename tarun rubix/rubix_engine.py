@@ -6,8 +6,9 @@ import color_detect
 
 
 def engine(side):
-    # cap = cv2.VideoCapture(0)  # To use computer-webcam
+
     URL = "http://192.168.29.190:8080/shot.jpg"
+
 
     while True:
         img_res = requests.get(URL)
@@ -16,49 +17,48 @@ def engine(side):
 
         img = imutils.resize(img, width=800)
 
-        # _,frame = cap.read() # we dont use this because i am using IPCAMERA which uses numpyarray
-
-        blur = cv2.GaussianBlur(img, (5, 5), 0)
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-        #color_detect.detect_color(img, hsv)
+        lst = []
+
         if side == "front":
             cv2.putText(img, "Detecting Front Face", (100, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
             cv2.putText(img, "\"n\" for next face", (100, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            color_detect.detect_color(img, hsv)
+            lst = color_detect.detect_color(img, hsv)
 
         elif side == "right":
             cv2.putText(img, "Detecting Right Face", (100, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
             cv2.putText(img, "\"n\" for next face", (100, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            color_detect.detect_color(img, hsv)
+            lst = color_detect.detect_color(img, hsv)
 
         elif side == "back":
             cv2.putText(img, "Detecting Back Face", (100, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
             cv2.putText(img, "\"n\" for next face", (100, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            color_detect.detect_color(img, hsv)
+            lst = color_detect.detect_color(img, hsv)
 
         elif side == "left":
             cv2.putText(img, "Detecting Left Face", (100, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
             cv2.putText(img, "\"n\" for next face", (100, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            color_detect.detect_color(img, hsv)
+            lst = color_detect.detect_color(img, hsv)
 
         elif side == "upper":
             cv2.putText(img, "Detecting Upper Face", (100, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
             cv2.putText(img, "\"n\" for next face", (100, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            color_detect.detect_color(img, hsv)
+            lst = color_detect.detect_color(img, hsv)
 
         elif side == "bottom":
             cv2.putText(img, "Detecting Bottom Face", (100, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
             cv2.putText(img, "\"n\" for next face", (100, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            color_detect.detect_color(img, hsv)
+            lst = color_detect.detect_color(img, hsv)
 
         cv2.imshow('img', img)
 
         k = cv2.waitKey(1) & 0xff
         if k == 110 :
-            break
+            return lst
+            #break
 
-    cv2.destroyAllWindows()
+    #cv2.destroyAllWindows()
 
 def main():
 
@@ -68,27 +68,129 @@ def main():
     lstleft = []
     lstup = []
     lstbot = []
+    stfront = ""
+    stright = ""
+    stleft = ""
+    stbot = ""
+    stup = ""
+    stback = ""
 
     if len(lstfront) == 0 :
         side = "front"
         lstfront = engine(side)
+        lstrow = lstfront[:3]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stfront+=(i[0][0])
+        lstrow = lstfront[3:6]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stfront+=(i[0][0])
+        lstrow = lstfront[6:9]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stfront+=(i[0][0])
+
 
     if len(lstright) == 0 :
         side = "right"
-        lstfront = engine(side)
+        lstright = engine(side)
+        lstrow = lstright[:3]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stright += (i[0][0])
+        lstrow = lstright[3:6]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stright += (i[0][0])
+        lstrow = lstright[6:9]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stright += (i[0][0])
+
 
     if len(lstback) == 0:
         side = "back"
-        lstfront = engine(side)
+        lstback = engine(side)
+        lstrow = lstback[:3]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stback += (i[0][0])
+        lstrow = lstback[3:6]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stback += (i[0][0])
+        lstrow = lstback[6:9]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stback += (i[0][0])
+
 
     if len(lstleft) == 0:
         side = "left"
-        lstfront = engine(side)
+        lstleft = engine(side)
+        lstrow = lstleft[:3]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stleft += (i[0][0])
+        lstrow = lstleft[3:6]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stleft += (i[0][0])
+        lstrow = lstleft[6:9]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stleft += (i[0][0])
+
 
     if len(lstup) == 0:
         side = "upper"
-        lstfront = engine(side)
+        lstup = engine(side)
+        lstrow = lstup[:3]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stup += (i[0][0])
+        lstrow = lstup[3:6]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stup += (i[0][0])
+        lstrow = lstup[6:9]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stup += (i[0][0])
+
 
     if len(lstbot) == 0:
         side = "bottom"
-        lstfront = engine(side)
+        lstbot = engine(side)
+        lstrow = lstbot[:3]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stbot += (i[0][0])
+        lstrow = lstbot[3:6]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stbot += (i[0][0])
+        lstrow = lstbot[6:9]
+        lstrow.sort(key=lambda x: x[1])
+        for i in lstrow:
+            stbot += (i[0][0])
+
+    # U = WHITE
+    # R = RED
+    # F = GREEN
+    # D = ORANGE
+    # L = YELLOW
+    # B = BLUE
+
+    stfinal = stup+stright+stfront+stbot+stleft+stback
+
+    stfinal = stfinal.replace("W","U")
+    stfinal = stfinal.replace("R", "R")
+    stfinal = stfinal.replace("G", "F")
+    stfinal = stfinal.replace("O", "D")
+    stfinal = stfinal.replace("Y", "L")
+    stfinal = stfinal.replace("B", "B")
+
+    return stfinal
+

@@ -7,10 +7,12 @@ import imutils
 ###################
 def detect_color(img,hsv):
 
-    lower_white = np.array([0, 0, 100],np.uint8)
+    lst = []
+
+    lower_white = np.array([0, 0, 60],np.uint8)
     upper_white = np.array([0, 0, 255],np.uint8)
 
-    lower_red = np.array([0, 100, 100], np.uint8)
+    lower_red = np.array([0, 100, 50], np.uint8)
     upper_red = np.array([5, 255, 255],np.uint8)
 
     lower_orange = np.array([10, 100, 100], np.uint8)
@@ -26,7 +28,6 @@ def detect_color(img,hsv):
 
     contours_blue= cv2.findContours(maskblue, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     contours_blue = imutils.grab_contours(contours_blue)
-    lst = []
     for contour in contours_blue:
         area = cv2.contourArea(contour)
         if area > 5000 :
@@ -38,23 +39,14 @@ def detect_color(img,hsv):
             y1 = h / 2
             cx = x + x1
             cy = y + y1
-            #print(cx,cy)
-            circ = cv2.circle(img, (int(cx), int(cy)), 2, (0, 0, 255), -1)
-            text = str(cx)
-            text += ","
-            text += str(cy)
+            cv2.circle(img, (int(cx), int(cy)), 2, (0, 0, 255), -1)
+            text = str(int(cx))+","+str(int(cy))
             cv2.putText(img, text, (int(cx), int(cy)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
+            cv2.putText(img, "BLUE", (int(cx), int(y) + h - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 29, 206), 2)
             if len(lst) != 9 :
                 if cx not in lst :
                     if cy not in lst :
                         lst.append(["Blue",cx,cy])
-
-            #print(pyautogui.position())
-            #print(lst)
-            #print(type (rec))
-            #print(rec.shape)
-            #print(rec)
-            #print(str(rec.shape[0]))
 
     contours_red = cv2.findContours(maskred, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     contours_red = imutils.grab_contours(contours_red)
@@ -68,10 +60,8 @@ def detect_color(img,hsv):
             y1 = h / 2
             cx = x + x1
             cy = y + y1
-            circ = cv2.circle(img, (int(cx), int(cy)), 2, (0, 0, 255), -1)
-            text = str(cx)
-            text += ","
-            text += str(cy)
+            cv2.circle(img, (int(cx), int(cy)), 2, (0, 0, 255), -1)
+            text = str(int(cx))+","+str(int(cy))
             cv2.putText(img, text, (int(cx), int(cy)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
             cv2.putText(img, "RED", (int(cx), int(y) + h - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 29, 206), 2)
             if len(lst) != 9:
@@ -91,19 +81,14 @@ def detect_color(img,hsv):
             y1 = h / 2
             cx = x + x1
             cy = y + y1
-            circ = cv2.circle(img, (int(cx), int(cy)), 2, (0, 0, 255), -1)
-            text = str(cx)
-            text += ","
-            text += str(cy)
+            cv2.circle(img, (int(cx), int(cy)), 2, (0, 0, 255), -1)
+            text = str(int(cx))+","+str(int(cy))
             cv2.putText(img, text, (int(cx), int(cy)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
             cv2.putText(img, "ORANGE", (int(cx), int(y)+h-5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 29, 206), 2)
             if len(lst) != 9:
                 if cx not in lst:
                     if cy not in lst:
                         lst.append(["Orange", cx, cy])
-
-    lst.sort(key = lambda x: x[1])
-    print(lst)
 
     contours_white = cv2.findContours(maskwhite, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     contours_white = imutils.grab_contours(contours_white)
@@ -117,11 +102,18 @@ def detect_color(img,hsv):
             y1 = h / 2
             cx = x + x1
             cy = y + y1
-            circ = cv2.circle(img, (int(cx), int(cy)), 2, (0, 0, 255), -1)
+            cv2.circle(img, (int(cx), int(cy)), 2, (0, 0, 255), -1)
+            text = str(int(cx)) + "," + str(int(cy))
+            cv2.putText(img, text, (int(cx), int(cy)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
+            cv2.putText(img, "WHITE", (int(cx), int(y) + h - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 29, 206), 2)
             if len(lst) != 9:
                 if cx not in lst:
                     if cy not in lst:
                         lst.append(["White", cx, cy])
+
+    lst.sort(key=lambda x: x[2])  # sorting accoring to row i.e y-axis
+    #print(lst)
+    return lst
 
     #cv2.imshow("maskblue", maskblue)
     #cv2.imshow("maskred", maskred)
