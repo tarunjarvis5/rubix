@@ -182,7 +182,12 @@ def main():
     # D = ORANGE
     # L = YELLOW
     # B = BLUE
-
+    print(stup)
+    print(stright)
+    print(stfront)
+    print(stbot)
+    print(stleft)
+    print(stback)
     stfinal = stup+stright+stfront+stbot+stleft+stback
 
     stfinal = stfinal.replace("W","U")
@@ -191,6 +196,7 @@ def main():
     stfinal = stfinal.replace("O", "D")
     stfinal = stfinal.replace("Y", "L")
     stfinal = stfinal.replace("B", "B")
+    print(stfinal)
 
     return stfinal
 
