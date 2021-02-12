@@ -7,7 +7,7 @@ import color_detect
 
 def engine(side):
 
-    URL = "http://192.168.29.190:8080/shot.jpg"
+    URL = "http://your-ip-camera-address/shot.jpg"
 
 
     while True:
