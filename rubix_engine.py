@@ -7,7 +7,7 @@ import color_detect
 
 def engine(side):
 
-    URL = "http://your-ip-camera-address/shot.jpg"
+    URL = "http://192.168.29.190:8080/shot.jpg"
 
 
     while True:
@@ -179,24 +179,24 @@ def main():
     # U = WHITE
     # R = RED
     # F = GREEN
-    # D = ORANGE
-    # L = YELLOW
+    # D = YELLOW
+    # L = ORANGE
     # B = BLUE
-    print(stup)
-    print(stright)
-    print(stfront)
-    print(stbot)
-    print(stleft)
-    print(stback)
+    #print(stup)
+    #print(stright)
+    #print(stfront)
+    #print(stbot)
+    #print(stleft)
+    #print(stback)
     stfinal = stup+stright+stfront+stbot+stleft+stback
 
-    stfinal = stfinal.replace("W","U")
+    stfinal = stfinal.replace("W", "U")
     stfinal = stfinal.replace("R", "R")
     stfinal = stfinal.replace("G", "F")
-    stfinal = stfinal.replace("O", "D")
-    stfinal = stfinal.replace("Y", "L")
+    stfinal = stfinal.replace("O", "L")
+    stfinal = stfinal.replace("Y", "D")
     stfinal = stfinal.replace("B", "B")
-    print(stfinal)
+    #print(stfinal)
 
     return stfinal
 

@@ -1,13 +1,13 @@
-import kociemba as Cube
+import kociemba
 import numpy as np
 import requests
-print(Cube.solve('FFBRDBDUDBDRRBBRFLUFUDUUFFBUDUBRRLLDLBFRFURURLLDLLLBDF'))
+#print(Cube.solve('UUDRBRDDUBBRLRLBRRBBRFUBBURUFDDFUDBUFDLLLRFFLFLLFDDFUL'))
 
     # U = WHITE
     # R = RED
     # F = GREEN
-    # D = ORANGE
-    # L = YELLOW
+    # D = YELLOW
+    # L = ORANGE
     # B = BLUE
 import cv2
 import imutils
@@ -16,7 +16,7 @@ import rubix_engine
 def main():
 
     # cap = cv2.VideoCapture(0)  # To use computer-webcam
-    URL = "http://your-ip-camera-address/shot.jpg"
+    URL = "http://192.168.29.190:8080/shot.jpg"
 
     while True:
         img_res = requests.get(URL)
@@ -38,8 +38,8 @@ def main():
         elif k == 115: # ascii value for "s"
             input_string = rubix_engine.main()
             break
-
-    print(Cube.solve(input_string))
+    #print(len(input_string))
+    print(kociemba.solve(input_string))
 
     cv2.destroyAllWindows()
 
