@@ -56,9 +56,7 @@ def engine(side):
         k = cv2.waitKey(1) & 0xff
         if k == 110 :
             return lst
-            #break
 
-    #cv2.destroyAllWindows()
 
 def main():
 

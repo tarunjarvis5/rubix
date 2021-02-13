@@ -1,17 +1,12 @@
 import kociemba
 import numpy as np
 import requests
-#print(Cube.solve('UUDRBRDDUBBRLRLBRRBBRFUBBURUFDDFUDBUFDLLLRFFLFLLFDDFUL'))
-
-    # U = WHITE
-    # R = RED
-    # F = GREEN
-    # D = YELLOW
-    # L = ORANGE
-    # B = BLUE
 import cv2
 import imutils
 import rubix_engine
+import rubix_output
+
+# point white center towards you and red center at top with green center to right face fo white
 
 def main():
 
@@ -29,17 +24,17 @@ def main():
 
         cv2.putText(img, "This is Rubix", (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
         cv2.putText(img, "Press \"s\" to start", (100,200), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        cv2.putText(img, "Press \"esc\" to stop", (100, 300), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
         cv2.imshow('img', img)
-        input_string = ''
+        instruction = []
         k = cv2.waitKey(1) & 0xff
         if k == 27:    # ascii value for "esc"
             break
         elif k == 115: # ascii value for "s"
-            input_string = rubix_engine.main()
-            break
-    #print(len(input_string))
-    print(kociemba.solve(input_string))
+            instrucst = rubix_engine.main()
+            instruction = (kociemba.solve(instrucst)).split()
+            rubix_output.alpha(instruction)
 
     cv2.destroyAllWindows()
 
