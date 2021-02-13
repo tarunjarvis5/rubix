@@ -11,7 +11,7 @@ import rubix_output
 def main():
 
     # cap = cv2.VideoCapture(0)  # To use computer-webcam
-    URL = "http://192.168.29.190:8080/shot.jpg"
+    URL = "http://your-ipcamera-address/shot.jpg"
 
     while True:
         img_res = requests.get(URL)

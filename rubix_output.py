@@ -7,7 +7,7 @@ import imutils
 
 def beta(inst):
 
-    URL = "http://192.168.29.190:8080/shot.jpg"
+    URL = "http://your-ipcamera-address/shot.jpg"
 
     lower_black = np.array([0, 0, 0], np.uint8)
     upper_black = np.array([255, 90, 75], np.uint8)
