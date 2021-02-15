@@ -106,6 +106,9 @@ def beta(inst):
                     cv2.arrowedLine(img, (int(cx) , int(y+h) -50 ), (int(x) + 50 , int(cy)), (255, 0, 247), 4,tipLength=0.1)
                     cv2.arrowedLine(img, (int(x+w) - 50, int(cy) ), (int(cx) , int(y+h) - 50 ), (255, 0, 247), 4,tipLength=0.1)
                     cv2.putText(img, "BACK", (int(cx)-70, int(cy)), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 0, 247), 4)
+                #It is to solve center case problem
+                elif inst == '1' :
+                    cv2.putText(img, "Solving center case", (100,200), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 0, 247), 4)
 
 
         cv2.putText(img, "Press \"n\" for next", (100, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
@@ -113,10 +116,13 @@ def beta(inst):
         cv2.imshow('img',img)
 
         k = cv2.waitKey(1) & 0xff
-        if k == 27:
+        if k == 110 :
             return None
 
+
 def alpha(instruction):
+
+    instruction.append('1') # For entercase
 
     for inst in instruction:
         beta(inst)
